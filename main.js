@@ -1,54 +1,62 @@
 // ==UserScript==
-// @name         [css]BetterFont
-// @version      20210208
-// @description  Font Change
+// @name         [css] BetterFont
+// @homepageURL  https://github.com/WellWells/better-font
+// @version      20231228
+// @description  Improved Font Rendering and Style Customization for a Better Reading Experience
 // @author       WellsTsai
 // @include      *://*
+// @run-at       document-start
 // ==/UserScript==
 
-(function() {
-    'use strict';
+(function () {
+    "use strict";
 
-    var blackList = [
-        'w3schools.com','term.ptt.cc','iamchucky.github.io','mathway','remotedesktop.google.com','regex101.com','docs.google.com','bobondemon.github.io'
-    ]
-    var langList = ['fa-ir','ru'];
-    var url = window.location.hostname;
+    // Change the flag is want to debug.
+    const IS_DEBUG = true
 
-    var match = RegExp(blackList.join('|')).exec(url);
-    if (match) {console.log('字體不更換，原因：'+match);return false;}
-
-    if (url.indexOf('fonts') !== -1) {console.log('字體不更換，原因：'+match);return false;}
-
-    var lang=document.documentElement.lang.toLowerCase();
-    match = RegExp(langList.join('|')).exec(lang);
-    if (match) {console.log('字體不更換，原因：'+match);return false;}
-
-    var css = document.createElement('style');
-    var head = document.head;
-
-    css.type = 'text/css';
-    var filterName = ['class'];
-    var filterValue = [
-        ['K3JSBVB-r-e','O4','rating','vjs','jump-top-box','social_btn','pe-7s','la',
-         'fa','f7-icons','Icon','ico','material-icons','DPvwYc','Xm9Bod',
-         'ynvm8','goog-inline-block','share','article-vote-controls',
-         'btn','indicator','Logo','logo','lg-icon','_3Kzp1','ni','sf','se','anchorjs','fui','fc_meta','show','i-','mjx']
+    const BLACK_LIST = [
+        "leetcode.com", "regex101.com", "w3schools.com",
+        "bobondemon.github.io", "iamchucky.github.io", "pictogrammers.github.io",
+        "fonts", "justfont", "materialdesignicons.com",
+        "docs.google.com", "remotedesktop.google.com", "developers.google.com", "cloud.google.com", "play.google.com",
+        "icloud.com", "microsoft.com", "live.com", "office.com",
+        "term.ptt.cc", "wellstsai.com",
     ];
-    var text = '*';
 
-    for (var i=0;i<filterName.length;i++){
-        for(var j=0;j<filterValue[i].length;j++){
-            text = text + `:not([`+filterName[i]+`*="` + filterValue[i][j] + `"])`;
-        }
+    const LANG_LIST = ["fa-ir", "ru"];
+    const URL = window.location.hostname;
+    const LANG = document.documentElement.lang.toLowerCase();
+    const URL_MATCH = RegExp(BLACK_LIST.join("|")).exec(URL);
+    const LANG_MATCH = RegExp(LANG_LIST.join("|")).exec(LANG);
+
+    if (URL_MATCH || LANG_MATCH) {
+        if (IS_DEBUG) console.log(`[Font/Debug] The font remains unchanged due to:${URL_MATCH ? URL_MATCH : LANG_MATCH}`);
+        return false;
     }
 
-    text=text + `:not(i):not(em):not(button):not(font):not(svg):not(blockquote){font-family: "儷黑 Pro" !important;font-weight: normal !important;}`;
-    css.innerText = text;
-    //console.log(text);
-    head.appendChild(css);
+    const FILTER = {
+        class: [
+            "K3JSBVB-r-e", "O4", "rating", "vjs", "jump-top-box", "social_btn",
+            "pe-7s", "la", "fa", "f7-icons", "Icon", "ico", "material-icons",
+            "DPvwYc", "Xm9Bod", "ynvm8", "goog-inline-block", "share", "article-vote-controls",
+            "btn", "indicator", "Logo", "logo", "lg-icon", "_3Kzp1", "ni", "sf",
+            "se", "anchorjs", "fui", "nav-toggle", "fc_meta", "show", "i-", "mjx", "docon", "o365cs"
+        ],
+        eventaction: ["search"],
+    }
+
+    const IGNORE_TAGS = ["i", "em", "button", "font", "span", "svg", "blockquote"];
+
+    function getIgnoredSelectors(filter) {
+        return Object.entries(filter).map(([key, values]) => {
+            return values.map(value => `:not([${key}*="${value}"])`).join("");
+        }).join("");
+    }
+
+    const ignoredSelectors = getIgnoredSelectors(FILTER);
+    const ignoredTags = IGNORE_TAGS.map(tag => `:not(${tag})`).join("");
+    const css = document.createElement("style");
+    css.innerText = `*${ignoredSelectors}${ignoredTags}{font-family: "LiHei Pro" !important; font-weight: normal !important;} textarea {font-family: inherit!important;}`;
+    document.head.appendChild(css);
+    console.log(css.innerText);
 })();
-
-
-
-
