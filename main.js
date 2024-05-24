@@ -44,7 +44,7 @@
             "pe-7s", "la", "fa", "f7-icons", "Icon", "ico", "material-icons",
             "DPvwYc", "Xm9Bod", "ynvm8", "goog-inline-block", "share", "article-vote-controls",
             "btn", "indicator", "Logo", "logo", "lg-icon", "_3Kzp1", "ni", "sf",
-            "se", "anchorjs", "fui", "nav-toggle", "fc_meta", "show", "i-", "mjx", "docon", "o365cs"
+            "se", "anchorjs", "fui", "nav-toggle", "fc_meta", "show", "i-", "mjx", "docon", "o365cs", "typography-feature-check"
         ],
         eventaction: ["search"]
     };
