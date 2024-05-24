@@ -12,7 +12,7 @@
     "use strict";
 
     // 設定是否啟用除錯模式
-    const IS_DEBUG = true;
+    const IS_DEBUG = false;
 
     // 黑名單網站列表
     const BLACK_LIST = [
@@ -20,8 +20,7 @@
         "bobondemon.github.io", "iamchucky.github.io", "pictogrammers.github.io",
         "fonts", "justfont", "materialdesignicons.com",
         "docs.google.com", "remotedesktop.google.com", "developers.google.com", "cloud.google.com", "play.google.com",
-        "icloud.com", "microsoft.com", "live.com", "office.com",
-        "term.ptt.cc"
+        "icloud.com", "microsoft.com", "live.com", "office.com", "term.ptt.cc"
     ];
 
     // 語言黑名單
