@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [css] BetterFont
 // @homepageURL  https://github.com/WellWells/better-font
-// @version      20240604
+// @version      20240605
 // @description  Improved Font Rendering and Style Customization for a Better Reading Experience
 // @author       WellsTsai
 // @include      *://*
@@ -16,16 +16,29 @@
 
     // 黑名單網站列表
     const BLACK_LIST = [
-        "leetcode.com", "regex101.com", "w3schools.com",
-        "bobondemon.github.io", "iamchucky.github.io", "pictogrammers.github.io",
-        "fonts", "justfont", "materialdesignicons.com",
-        "docs.google.com", "remotedesktop.google.com", "developers.google.com", "cloud.google.com", "play.google.com",
-        "icloud.com", "microsoft.com", "live.com", "office.com",
-        "term.ptt.cc", "wellstsai.com"
+        "bobondemon.github.io",
+        "cloud.google.com",
+        "developers.google.com",
+        "docs.google.com",
+        "fonts",
+        "iamchucky.github.io",
+        "icloud.com",
+        "justfont",
+        "leetcode.com",
+        "live.com",
+        "materialdesignicons.com",
+        "microsoft.com",
+        "office.com",
+        "pictogrammers.github.io",
+        "play.google.com",
+        "regex101.com",
+        "remotedesktop.google.com",
+        "term.ptt.cc",
+        "w3schools.com",
     ];
 
     const MONOSPACE_PAGE = [
-        "wikipedia.org"
+        "xxx.com"
     ];
 
     // 語言黑名單
@@ -52,12 +65,12 @@
             "pe-7s", "la", "fa", "f7-icons", "Icon", "ico", "material-icons",
             "DPvwYc", "Xm9Bod", "ynvm8", "goog-inline-block", "share", "article-vote-controls",
             "btn", "indicator", "Logo", "logo", "lg-icon", "_3Kzp1", "ni", "sf",
-            "se", "anchorjs", "fui", "nav-toggle", "fc_meta", "show", "i-", "mjx", "docon", "o365cs"
+            "se", "anchorjs", "fui", "nav-toggle", "fc_meta", "show", "i-", "mjx", "docon", "o365cs", "chroma"
         ],
         eventaction: ["search"]
     };
 
-    const IGNORE_TAGS = ["i", "em", "button", "font", "span", "svg", "blockquote"];
+    const IGNORE_TAGS = ["i", "em", "button", "font", "span", "svg", "blockquote", "pre", "textarea", "code"];
 
     // 生成忽略選擇器
     const getIgnoredSelectors = (filter) => {
@@ -70,8 +83,8 @@
     const ignoredSelectors = getIgnoredSelectors(FILTER);
     const ignoredTags = IGNORE_TAGS.map(tag => `:not(${tag})`).join("");
     const css = document.createElement("style");
-
     const fontFamily = isPageUseMonospace(MONOSPACE_PAGE, URL) ? `"Noto Sans Mono", "Noto Sans TC"` : `"lihei pro"`
+
     css.innerText = `*${ignoredSelectors}${ignoredTags} { font-family: ${fontFamily} !important; font-weight: normal !important; } textarea { font-family: inherit !important; }`;
 
     document.head.appendChild(css);
